@@ -1,0 +1,13 @@
+table {
+    text-align:center;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tr:nth-child(even) {
+    background-color: #E9E9E9;
+ }
+
+ tr:nth-child(odd) {
+    background-color: #F5F5F5;
+ }

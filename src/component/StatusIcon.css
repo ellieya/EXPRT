@@ -1,0 +1,30 @@
+.status-icon {
+    color:white;
+    font-weight: bold;
+}
+
+.new-icon {
+    background-color: #037AFB;
+    padding: 1px 10px;
+    border-radius: 3px;
+}
+
+.approve-icon {
+    background-color: #55A747;
+    padding: 1px 10px;
+    border-radius: 3px;
+}
+
+.need-attention-icon {
+    background-color: #F8C133;
+    color: #3D3825;
+    padding: 1px 10px;
+    border-radius: 3px;
+}
+
+.denied-icon {
+    background-color: #DC3C45;
+    padding: 1px 10px;
+    border-radius: 3px;
+}
+
