@@ -26,7 +26,8 @@ namespace EPRT
                 return builder.ToString();
             }
         }
-        public static void Select(string amount, string table, string col_name)
+
+        public static MySqlDataReader Select(string values, string table)
         {
 
             string connect = "server=localhost;database=expense_report_sys;uid=root;pwd=Virfidelis2016!;";
@@ -37,14 +38,19 @@ namespace EPRT
 
                 using (MySqlCommand cmd = conn.CreateCommand())
                 {
-                    string x = String.Format("SELECT {0} FROM {1}", amount, table);
+                    string x = String.Format("SELECT {0} FROM {1}", values, table);
                     cmd.CommandText = x;
-                    
+
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        while(reader.Read())
+
+                        if (reader.HasRows)
                         {
-                            Console.WriteLine(reader.GetString(col_name));
+                            return reader;
+                        }
+                        else
+                        {
+                            return null;
                         }
                     }
 
@@ -55,7 +61,7 @@ namespace EPRT
 
         }
 
-        public static void Insert(string date, string reason, string type, int manager_id, string ssn, decimal price)
+        public static int Insert(string date, string reason, string type, int manager_id, string ssn, decimal price)
         {
 
             string connect = "server=localhost;database=expense_report_sys;uid=root;pwd=Virfidelis2016!;";
@@ -73,7 +79,12 @@ namespace EPRT
                         "VALUES ('{0}', '{1}', '{2}', '{3}', '{4}', {5} )", ComputeSha256Hash(ssn), manager_id, type, reason, date, price);
 
                     cmd.CommandText = x;
-                    cmd.ExecuteNonQuery();
+
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        return reader.RecordsAffected;
+                    }
 
                 }
 
@@ -81,7 +92,7 @@ namespace EPRT
 
         }
 
-        public static void Update(int report_id)
+        public static int Update(int report_id)
         {
 
             string connect = "server=localhost;database=expense_report_sys;uid=root;pwd=Virfidelis2016!;";
@@ -97,7 +108,11 @@ namespace EPRT
                         "WHERE report_id = {0}", report_id);
                         
                     cmd.CommandText = x;
-                    cmd.ExecuteNonQuery();
+                    using (MySqlDataReader reader = cmd.ExecuteReader())
+                    {
+
+                        return reader.RecordsAffected;
+                    }
 
                 }
 
@@ -105,7 +120,7 @@ namespace EPRT
 
         }
 
-        public static string Login(string username, string password)
+        public static bool Login(string username, string password)
         {
 
             string connect = "server=localhost;database=expense_report_sys;uid=root;pwd=Virfidelis2016!;";
@@ -124,13 +139,13 @@ namespace EPRT
 
                     using (MySqlDataReader reader = cmd.ExecuteReader())
                     {
-                        if (reader.Read())
+                        if (reader.HasRows)
                         {
-                            return password;
+                            return true;
                         }
                         else
                         {
-                            return "ERROR!";
+                            return false;
                         }
                     }
 
