@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace EPRT
+namespace EXPRT
 {
     class DB_UTILS
     {
@@ -30,7 +30,7 @@ namespace EPRT
         public static MySqlDataReader Select(string values, string table)
         {
 
-            string connect = "server=localhost;database=expense_report_sys;uid=root;pwd=Virfidelis2016!;";
+            string connect = "server=localhost;database=expense_report_sys;uid=root;pwd=*****;";
 
             using (var conn = new MySqlConnection(connect))
             {
